@@ -2,13 +2,6 @@
 
 module Cluster
 
-  def query_sf(query)
-    # query is a hash that is post in json format to SolidFire API.
-    solidfire_rest_url = "https://#{@solidfire_username}:#{@solidfire_password}@#{@solidfire_mvip}/json-rpc/5.0"
-    result = JSON.parse(RestClient.post solidfire_rest_url, query.to_json )
-    return result
-  end
-  
   def cluster_state()
     api_call = {
       :method => "GetClusterState",
@@ -16,11 +9,7 @@ module Cluster
       :id => 1
     }
     answer = query_sf(api_call)
-    if answer["error"].nil?
-      return answer["error"]["message"]
-    else
-      return answer[]
-    return answer["result"]
+    return answer
   end
   
   def cluster_info()
@@ -30,7 +19,7 @@ module Cluster
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]["clusterInfo"]
+    return answer["clusterInfo"]
   end
   
   def drives_list()
@@ -40,7 +29,7 @@ module Cluster
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]["drives"]
+    return answer["drives"]
   end
   
   def drive_stats(drive_id)
@@ -63,7 +52,7 @@ module Cluster
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]["accounts"]
+    return answer["accounts"]
   end
 
 end

@@ -25,9 +25,22 @@ module SolidfireApi
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
       solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
-      result = JSON.parse(RestClient.post solidfire_rest_url, query.to_json )
-      return result
+      result = JSON.parse(RestClient.post solidfire_rest_url, query.to_json)
+      if result["result"].nil? 
+        return result["error"]
+      else 
+        return result["result"]
+      end
     end 
+  end
+      
+  def self.name
+    api_call = {
+      :method => "GetClusterInfo",
+      :params => {
+      }
+    }
+    answer = query_sf(api_call)["name"]
   end
       
 end

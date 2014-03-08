@@ -9,7 +9,7 @@ module Volume
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]["volumes"]
+    return answer["volumes"]
   end
   
   def volumestats(vol_id)
@@ -20,7 +20,7 @@ module Volume
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]["volumeStats"]
+    return answer["volumeStats"]
   end
   
   def volumesforaccount(accountid)
