@@ -1,6 +1,6 @@
 module SolidfireApi
   
-  Class Connection    
+  class Connection    
     #include Cluster
     include Volume
     
