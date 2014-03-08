@@ -16,12 +16,6 @@ module SolidfireApi
       @data = nil
     end
     
-    def initialize(options={})
-      @mvip = options[:mvip]
-      @username = options[:username]
-      @password = options[:password]
-    end
-    
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
       solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
@@ -32,15 +26,35 @@ module SolidfireApi
         return result["result"]
       end
     end 
-  end
-      
-  def self.name
-    api_call = {
-      :method => "GetClusterInfo",
-      :params => {
+
+    def initialize(options={})
+      @mvip = options[:mvip]
+      @username = options[:username]
+      @password = options[:password]
+
+      api_call = {
+        :method => "GetClusterInfo",
+        :params => {
+        }
       }
-    }
-    answer = query_sf(api_call)["name"]
-  end
-      
+      array = query_sf(api_call)
+      @name = array["clusterInfo"]["name"]
+      @mvip = array["clusterInfo"]["mvip"]
+      @svip = array["clusterInfo"]["svip"]
+    end
+
+    def name
+      @name
+    end
+    
+    def mvip
+      @mvip
+    end
+    
+    def svip
+      @svip
+    end
+    
+    
+  end    
 end
