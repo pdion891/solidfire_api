@@ -1,7 +1,9 @@
+require 'solidfire_api/volume'
+
 module SolidfireApi
   
   class Connection    
-    #include Cluster
+    include Cluster
     include Volume
     
     def self.data
