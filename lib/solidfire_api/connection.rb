@@ -16,6 +16,25 @@ module SolidfireApi
       @data = nil
     end
     
+    ##
+    # 
+    # Used by all other methods to connect at the SolidFire API
+    # require RestClient gem to handle Rest API calls.
+    # the input is the complete API query as Hash, the method will
+    # send the query as json request to the Solidfire API.
+    #
+    # Example:
+    #   >> api_call = {
+    #   >>   :method => "GetClusterInfo",
+    #   >>   :params => {
+    #   >>    }
+    #   >> }
+    #   >> query_sf(api_call)
+    #
+    # 
+    # Arguments:
+    #   query: (Hash)
+    #      must include the complete Solidfire API query string.
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
       solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
