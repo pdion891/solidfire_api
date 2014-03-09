@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Pierre-Luc Dion"]
   spec.email         = ["pdion@cloudops.com"]
   spec.summary       = %q{Solidfire Storage API Ruby Libraries}
-  spec.description   = %q{Solidfire Storage API call for Ruby. Usafull for metric collection of Volumes and cluster status}
+  spec.description   = %q{Ruby client for Solidfire Storage API. Usefull for metric collection of Volumes and cluster status}
   spec.homepage      = "https://github.com/pdion891/solidfire_api"
   spec.license       = "MIT"
 
