@@ -1,6 +1,6 @@
 module Volume
   
-  def volumeslist(limit = 1000)
+  def volumes_list(limit = 1000)
     api_call = {
       :method => "ListActiveVolumes",
       :params => {
@@ -12,7 +12,7 @@ module Volume
     return answer["volumes"]
   end
   
-  def volumestats(vol_id)
+  def volume_stats(vol_id)
     api_call = {
       :method => "GetVolumeStats",
       :params => {
@@ -23,7 +23,7 @@ module Volume
     return answer["volumeStats"]
   end
   
-  def volumesforaccount(accountid)
+  def volumes_for_account(accountid)
     api_call = {
       :method => "ListVolumesForAccount",
       :params => {

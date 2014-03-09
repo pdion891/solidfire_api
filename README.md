@@ -4,7 +4,7 @@ Ruby Gem to connect on Solidfire storage Array API to collect stats. Currently s
 
 ## Installation
 
-Install it yourself as:
+Install it:
 
     $ gem install solidfire_api
     $ irb
@@ -15,17 +15,20 @@ Install it yourself as:
 
 ```ruby
   require 'solidfire_api'
-  a = SolidfireApi::Connection.new({
+  my_sf = SolidfireApi::Connection.new({
     :mvip => "192.168.0.1",
     :username => "monitor",
     :password =>  "patate"
   })
-  a.name
-  a.mvip
-  a.svip
-  a.volumes_list
+  my_sf.name
+  my_sf.mvip
+  my_sf.svip
+  my_sf.volumes_list
   
 ```
+
+Currently supporting volumes and cluster listing and stats API call's to collect perf metric for monitoring usage. Nothing for managing cluster yet.
+
 
 ## Contributing
 
