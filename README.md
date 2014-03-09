@@ -6,6 +6,12 @@ Use gem: RestClient to interract with Solidfire API.
 
 ## Installation
 
+Gems requirements:
+
+* rest_client
+* net/http
+* json 
+
 Install it:
 
     $ gem install solidfire_api
