@@ -1,30 +1,31 @@
 # SolidfireApi
 
-Ruby Gem Accessing Solidfire storage Array API to collect stats. Currently support Simple Authentication.
+Ruby Gem to connect on Solidfire storage Array API to collect stats. Currently support Simple Authentication and very basic functionality.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'solidfire_api'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install it yourself as:
 
     $ gem install solidfire_api
+    $ irb
+    > require 'solidfire_api'
+    
 
 ## Usage
-  
+
+```ruby
   require 'solidfire_api'
   a = SolidfireApi::Connection.new({
     :mvip => "192.168.0.1",
     :username => "monitor",
     :password =>  "patate"
   })
-  a.
+  a.name
+  a.mvip
+  a.svip
+  a.volumes_list
+  
+```
 
 ## Contributing
 
