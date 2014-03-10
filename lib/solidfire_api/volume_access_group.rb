@@ -11,13 +11,10 @@ module VolumeAccessGroup
   #   state: (String, active or deleted, default = active)
   #   limit: (Integer, default = 1000)
   #
-  def vag_list(limit = "1000")
+  def vag_list()
     api_call = {
-      :method => "ListVolumeAccessGroup",
-      :params => {
-        :startVolumeAccessVolumeGroupID => 0,
-        :limit => 1000
-      }
+      :method => "ListVolumeAccessGroups",
+      :params => {}
     }
     answer = query_sf(api_call)
     return answer["volumeAccessGroups"]
@@ -29,6 +26,8 @@ module VolumeAccessGroup
   #
   # Arguments:
   #   group_name: (String, name of group)
+  #
+  # Require Admin credential
   #
   def vag_create(group_name)
     api_call = {
@@ -49,6 +48,8 @@ module VolumeAccessGroup
   #   initiator: (String)
   #   group_id: (Integer)
   #
+  # Require Admin credential
+  #
   def vag_add_initiator(initiator, group_id)
     api_call = {
       :method => "AddInitiatorsToVolumeAccessGroup",
@@ -68,7 +69,9 @@ module VolumeAccessGroup
   #   volume_id: (Integer)
   #   group_id: (Integer)
   #
-  def vag_add_volume(volume_id, group_id)
+  # Require Admin credential
+  #
+  def vag_add_volume_id(volume_id, group_id)
     api_call = {
       :method => "AddVolumesToVolumeAccessGroup",
       :params => {
@@ -79,4 +82,15 @@ module VolumeAccessGroup
     answer = query_sf(api_call)
     return answer
   end   
+  
+  ##
+  # Add Volume to VolumeAccessGroup using names
+  #
+  #
+  def vag_add_volume(volume_name, vag_name)
+    volume_id = volumes_list().select {|s| s["name"] == volume_name }.first["volumeID"]
+    vag_id = vag_list().select {|s| s["name"] == vag_name }.first["volumeAccessGroupID"]
+    vag_add_volume_id(volume_id, vag_id)
+  end
+  
 end

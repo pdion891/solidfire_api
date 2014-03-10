@@ -25,6 +25,8 @@ Install it:
 
 ## Usage
 
+### Get some cluster informations
+
 ```ruby
   require 'solidfire_api'
   my_sf = SolidfireApi::Connection.new({
@@ -39,6 +41,26 @@ Install it:
   my_sf.svip
   my_sf.volumes_list
   
+```
+
+
+### Map Volume to a Volume Access Group
+
+If you don't want to use CHAP authentication for iSCSI LUN access from initiator, you have to attach Volume to Volume Access Group that include iSCSI initiators.
+
+Administrator privileges required.
+
+```ruby
+  require 'solidfire_api'
+  my_sf = SolidfireApi::Connection.new({
+    :mvip => "192.168.0.1",
+    :username => "admin",
+    :password =>  "admin_password"
+  })
+  
+  my_sf.vag_add_volume("volumename", "group_name")
+   => {}
+
 ```
 
 ## Contributing
