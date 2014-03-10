@@ -1,10 +1,19 @@
-require 'solidfire_api/volume'
-
 module SolidfireApi
   
+  ##
+  # Object connection 
+  #
+  # Call using:  SolidfireApi::Connection.new({...})
+  #
+  # Arguments:
+  #   mvip: (String)
+  #   username: (String)
+  #   password: (String)
+  # 
   class Connection    
     include Cluster
     include Volume
+    include Node
     
     def self.data
       @data ||= Hash.new do |hash, key|

@@ -31,35 +31,46 @@ module Cluster
     answer = query_sf(api_call)
     return answer["clusterInfo"]
   end
-
-  ##
-  # provide list of disk in a Array of hash.
-  #  
-  def drives_list()
-    api_call = {
-      :method => "ListDrives",
-      :params => {
-      }
-    }
-    answer = query_sf(api_call)
-    return answer["drives"]
-  end
   
   ##
-  # hard drive performance metric, return in Hash.
-  # 
-  # Arguments:
-  #   drive_id: (Integer)
-  def drive_stats(drive_id)
+  # Cluster firmware version including nodes
+  #
+  def cluster_version()
     api_call = {
-      :method => "GetDriveStats",
+      :method => "GetClusterVersionInfo",
       :params => {
-        :driveID => drive_id
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]
-  end
+    return answer["clusterVersion"]
+  end  
+  ##
+  # Cluster performance metrics, overall IOPS,..
+  #  
+  def cluster_stats()
+    api_call = {
+      :method => "GetClusterStats",
+      :params => {
+      }
+    }
+    answer = query_sf(api_call)
+    return answer["clusterStats"]
+  end  
+
+  ##
+  # Cluster capacity 
+  #
+  def cluster_capacity()
+    api_call = {
+      :method => "GetClusterCapacity",
+      :params => {
+      }
+    }
+    answer = query_sf(api_call)
+    return answer["clusterCapacity"]
+  end 
+  
+
   
   ##
   # List all account, return Array of Hash
@@ -77,6 +88,26 @@ module Cluster
     }
     answer = query_sf(api_call)
     return answer["accounts"]
+  end
+
+  ##
+  # List Cluster Faults
+  # 
+  # Arguments:
+  #  fault_type: (node,drive,cluster,service, default=all)
+  #       node: Fault affecting an entire node
+  #       drive: Fault affecting an individual drive
+  #       cluster: Fault affecting the entire cluster
+  #       service: Fault affecting a service on the cluster
+  def faults_list(fault_type = "all")
+    api_call = {
+      :method => "ListClusterFaults",
+      :params => {
+        :faultTypes => fault_type
+      }
+    }
+    answer = query_sf(api_call)
+    return answer["faults"]
   end
 
 end

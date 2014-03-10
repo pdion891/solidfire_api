@@ -2,19 +2,27 @@ module Volume
   
 
   ## 
-  # list volumes, return Array of Hash
+  # list active volumes, return Array of Hash
   #
   # Arguments:
+  #   state: (String, active or deleted, default = active)
   #   limit: (Integer, default = 1000)
   #
-  def volumes_list(limit = 1000)
-    api_call = {
-      :method => "ListActiveVolumes",
-      :params => {
-        :startVolumeID => 0,
-        :limit => limit
+  def volumes_list(state = "active", limit = "1000")
+    case state
+    when "active"
+      api_call = {
+        :method => "ListActiveVolumes",
+        :params => {
+          :startVolumeID => 0,
+          :limit => 1000
+        }
       }
-    }
+    when "deleted"
+      api_call = {
+        :method => "ListDeletedVolumes",
+        :params => {}
+      }
     answer = query_sf(api_call)
     return answer["volumes"]
   end
