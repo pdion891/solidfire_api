@@ -23,6 +23,7 @@ module Volume
         :method => "ListDeletedVolumes",
         :params => {}
       }
+    end
     answer = query_sf(api_call)
     return answer["volumes"]
   end

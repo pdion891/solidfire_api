@@ -1,3 +1,9 @@
+# Load libraries
+require 'solidfire_api/volume'
+require 'solidfire_api/node'
+require 'solidfire_api/cluster'
+require 'solidfire_api/volume_access_group'
+
 module SolidfireApi
   
   ##
@@ -14,6 +20,7 @@ module SolidfireApi
     include Cluster
     include Volume
     include Node
+    include VolumeAccessGroup
     
     def self.data
       @data ||= Hash.new do |hash, key|
@@ -48,8 +55,12 @@ module SolidfireApi
       # query is a hash that is post in json format to SolidFire API.
       solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
       result = JSON.parse(RestClient.post solidfire_rest_url, query.to_json)
-      if result["result"].nil? 
-        return result["error"]
+      if result["result"].nil?
+        if result["error"].nil?
+          return result
+        else
+          return result["error"]
+        end
       else 
         return result["result"]
       end

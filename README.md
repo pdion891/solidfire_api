@@ -1,6 +1,10 @@
 # SolidfireApi
 
-Ruby Gem to connect on Solidfire storage Array API to collect stats. Currently support Simple Authentication and very basic functionalities.
+Ruby Gem to connect on [Solidfire](http://www.solidfire.com/) storage Array API to collect stats. Currently support Simple Authentication and very basic functionalities.
+
+Currently supporting volumes, cluster and disks listing and stats API call's to collect performance metrics for monitoring usage. Nothing for managing cluster yet.
+
+Creation of VolumeAccessGroup, map volumes and iSCSI initiator. 
 
 Use gem: RestClient to interract with Solidfire API. 
 
@@ -37,9 +41,6 @@ Install it:
   
 ```
 
-Currently supporting volumes and cluster listing and stats API call's to collect performance metrics for monitoring usage. Nothing for managing cluster yet.
-
-
 ## Contributing
 
 1. Fork it ( http://github.com/pdion891/solidfire_api/fork )
@@ -47,3 +48,7 @@ Currently supporting volumes and cluster listing and stats API call's to collect
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Todo
+
+* Everything else

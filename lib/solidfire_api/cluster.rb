@@ -66,8 +66,37 @@ module Cluster
       :params => {
       }
     }
-    answer = query_sf(api_call)
-    return answer["clusterCapacity"]
+    answer = query_sf(api_call)["clusterCapacity"]
+    
+    # thinProvisioningFactor metric, calculated based on document instructions.
+    # if condition to avoid divide by 0.
+    if answer["nonZeroBlocks"] == 0
+      answer["thinProvisioningFactor"] = 0
+    else
+      answer["thinProvisioningFactor"] = (answer["nonZeroBlocks"] + answer["zeroBlocks"]) / answer["nonZeroBlocks"]
+    end
+    
+    # deDuplicationFactor metric, calculated based on document instructions.
+    # if condition to avoid divide by 0.
+    if answer["uniqueBlocks"] == 0
+      answer["deDuplicationFactor"] = 0
+    else
+      answer["deDuplicationFactor"] = answer["nonZeroBlocks"] / answer["uniqueBlocks"]
+    end
+    
+    # compressionFactor metric, calculated based on document instructions.
+    # if condition to avoid divide by 0.
+    if answer["uniqueBlocksUsedSpace"] == 0
+      answer["compressionFactor"] = 0
+    else
+      answer["compressionFactor"] = (answer["uniqueBlocks"] * 4096) / answer["uniqueBlocksUsedSpace"]
+    end
+    
+    # efficiencyFactor metric, calculated based on document instructions.
+    # efficiencyFactor = thinProvisioningFactor * deDuplicationFactor * compressionFactor
+    answer["efficiencyFactor"] = answer["thinProvisioningFactor"] * answer["deDuplicationFactor"] * answer["compressionFactor"]
+    
+    return answer
   end 
   
 
