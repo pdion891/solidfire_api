@@ -53,7 +53,7 @@ module Node
   # Arguments:
   #   node_id: (Integer)
   #
-  def node_stats(node_id)
+  def node_hardware(node_id)
     api_call = {
       :method => "GetNodeHardwareInfo",
       :params => {

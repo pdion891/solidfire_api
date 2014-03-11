@@ -145,8 +145,7 @@ module Cluster
   def iscsi_sessions_list()
     api_call = {
       :method => "ListISCSISessions",
-      :params => {
-      }
+      :params => {}
     }
     answer = query_sf(api_call)
     return answer["sessions"]
