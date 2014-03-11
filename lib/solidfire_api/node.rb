@@ -46,6 +46,23 @@ module Node
     answer = query_sf(api_call)
     return answer["nodeStats"]
   end
+
+  ##
+  # node Hardware info
+  #
+  # Arguments:
+  #   node_id: (Integer)
+  #
+  def node_stats(node_id)
+    api_call = {
+      :method => "GetNodeHardwareInfo",
+      :params => {
+        :nodeID => node_id
+      }
+    }
+    answer = query_sf(api_call)
+    return answer["nodeHardwareInfo"]
+  end
   
   ##
   # provide list of disks in a Array of hash.

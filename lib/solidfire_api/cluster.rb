@@ -139,5 +139,19 @@ module Cluster
     return answer["faults"]
   end
 
+  ##
+  # Cluster List iSCSI sessions.
+  #  
+  def iscsi_sessions_list()
+    api_call = {
+      :method => "ListISCSISessions",
+      :params => {
+      }
+    }
+    answer = query_sf(api_call)
+    return answer["sessions"]
+  end
+
+
 end
 
