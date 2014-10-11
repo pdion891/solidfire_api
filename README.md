@@ -32,7 +32,8 @@ Install it:
   my_sf = SolidfireApi::Connection.new({
     :mvip => "192.168.0.1",
     :username => "monitor",
-    :password =>  "patate"
+    :password =>  "patate",
+    :verify_ssl => true
   })
 
   # Some method examples:

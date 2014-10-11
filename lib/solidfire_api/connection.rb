@@ -54,7 +54,13 @@ module SolidfireApi
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
       solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
-      result = JSON.parse(RestClient.post solidfire_rest_url, query.to_json)
+
+      conn = RestClient::Resource.new(
+        solidfire_rest_url,
+        :verify_ssl => @verify_ssl
+      )
+      result = JSON.parse(conn.post query.to_json)
+
       if result["result"].nil?
         if result["error"].nil?
           return result
@@ -70,6 +76,11 @@ module SolidfireApi
       @mvip = options[:mvip]
       @username = options[:username]
       @password = options[:password]
+      @verify_ssl = options[:verify_ssl]
+
+      if @verify_ssl.nil?
+        @verify_ssl = false
+      end
 
       api_call = {
         :method => "GetClusterInfo",
@@ -93,7 +104,6 @@ module SolidfireApi
     def svip
       @svip
     end
-    
     
   end    
 end
