@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Solidfire Storage API Ruby Libraries}
   spec.description   = %q{Ruby client for Solidfire Storage API. Usefull for metric collection of Volumes and cluster status}
   spec.homepage      = "https://github.com/pdion891/solidfire_api"
-  spec.license       = "MIT"
+  spec.license       = "Apache 2.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -19,8 +19,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake", "~> 1.5"
   
   # Other Gems dependencies
-  spec.add_runtime_dependency "rest-client"
+  spec.add_runtime_dependency "rest-client", "~> 1.7"
 end
