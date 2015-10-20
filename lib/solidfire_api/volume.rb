@@ -79,7 +79,7 @@ module Volume
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]
+    return answer
   end
     
   ##
@@ -96,7 +96,7 @@ module Volume
       }
     }
     answer = query_sf(api_call)
-    return answer["result"]
+    return answer
   end 
   
   
@@ -107,6 +107,6 @@ module Volume
       :id => 1
     }
     answer = query_sf(api_call)
-    return answer["result"]
+    return answer
   end 
 end

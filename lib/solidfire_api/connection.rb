@@ -53,7 +53,7 @@ module SolidfireApi
     #      must include the complete Solidfire API query string.
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
-      solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/5.0"
+      solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/8.0"
 
       conn = RestClient::Resource.new(
         solidfire_rest_url,

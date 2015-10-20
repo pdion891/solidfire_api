@@ -1,6 +1,6 @@
 # SolidfireApi
 
-Ruby Gem to connect on [Solidfire](http://www.solidfire.com/) storage Array API to collect stats. Currently support Simple Authentication and very basic functionalities.
+Ruby Gem to connect on [Solidfire](http://www.solidfire.com/) storage Array API to collect stats. Currently support Simple Authentication and very basic functionalities. Work with API version 8 of SolidFire.
 
 Currently supporting volumes, cluster and disks listing and stats API call's to collect performance metrics for monitoring usage. Nothing for managing cluster yet.
 
