@@ -73,7 +73,8 @@ module Cluster
     if answer["nonZeroBlocks"] == 0
       answer["thinProvisioningFactor"] = 0
     else
-      answer["thinProvisioningFactor"] = (answer["nonZeroBlocks"] + answer["zeroBlocks"]) / answer["nonZeroBlocks"]
+      answer["thinProvisioningFactor"] = (answer["nonZeroBlocks"] + answer["zeroBlocks"]) / answer["nonZeroBlocks"].to_f
+      answer["thinProvisioningFactor"] = answer["thinProvisioningFactor"].round(2)
     end
     
     # deDuplicationFactor metric, calculated based on document instructions.
@@ -81,7 +82,8 @@ module Cluster
     if answer["uniqueBlocks"] == 0
       answer["deDuplicationFactor"] = 0
     else
-      answer["deDuplicationFactor"] = answer["nonZeroBlocks"] / answer["uniqueBlocks"]
+      answer["deDuplicationFactor"] = answer["nonZeroBlocks"] / answer["uniqueBlocks"].to_f
+      answer["deDuplicationFactor"] = answer["deDuplicationFactor"].round(2)
     end
     
     # compressionFactor metric, calculated based on document instructions.
@@ -89,12 +91,14 @@ module Cluster
     if answer["uniqueBlocksUsedSpace"] == 0
       answer["compressionFactor"] = 0
     else
-      answer["compressionFactor"] = (answer["uniqueBlocks"] * 4096) / answer["uniqueBlocksUsedSpace"]
+      answer["compressionFactor"] = (answer["uniqueBlocks"] * 4096) / answer["uniqueBlocksUsedSpace"].to_f
+      answer["compressionFactor"] = answer["compressionFactor"].round(2)
     end
     
     # efficiencyFactor metric, calculated based on document instructions.
     # efficiencyFactor = thinProvisioningFactor * deDuplicationFactor * compressionFactor
     answer["efficiencyFactor"] = answer["thinProvisioningFactor"] * answer["deDuplicationFactor"] * answer["compressionFactor"]
+    answer["efficiencyFactor"] = answer["efficiencyFactor"].round(2)
     
     return answer
   end 
