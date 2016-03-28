@@ -1,7 +1,7 @@
 ##
 # Cluster
-# 
-# Cluster related API calls 
+#
+# Cluster related API calls
 #
 
 module Cluster
@@ -21,7 +21,7 @@ module Cluster
 
   ##
   # Cluster Information such as hostname, mvip,svip,...
-  #  
+  #
   def cluster_info()
     api_call = {
       :method => "GetClusterInfo",
@@ -31,7 +31,19 @@ module Cluster
     answer = query_sf(api_call)
     return answer["clusterInfo"]
   end
-  
+
+  ##
+  # Cluster fullness information
+  #
+  def cluster_fullness()
+    api_call = {
+      :method => "GetClusterFullThreshold",
+      :params => {}
+    }
+    answer = query_sf(api_call)
+    return answer
+  end
+
   ##
   # Cluster firmware version including nodes
   #
@@ -43,10 +55,10 @@ module Cluster
     }
     answer = query_sf(api_call)
     return answer["clusterVersion"]
-  end  
+  end
   ##
   # Cluster performance metrics, overall IOPS,..
-  #  
+  #
   def cluster_stats()
     api_call = {
       :method => "GetClusterStats",
@@ -55,10 +67,10 @@ module Cluster
     }
     answer = query_sf(api_call)
     return answer["clusterStats"]
-  end  
+  end
 
   ##
-  # Cluster capacity 
+  # Cluster capacity
   #
   def cluster_capacity()
     api_call = {
@@ -67,7 +79,7 @@ module Cluster
       }
     }
     answer = query_sf(api_call)["clusterCapacity"]
-    
+
     # thinProvisioningFactor metric, calculated based on document instructions.
     # if condition to avoid divide by 0.
     if answer["nonZeroBlocks"] == 0
@@ -76,7 +88,7 @@ module Cluster
       answer["thinProvisioningFactor"] = (answer["nonZeroBlocks"] + answer["zeroBlocks"]) / answer["nonZeroBlocks"].to_f
       answer["thinProvisioningFactor"] = answer["thinProvisioningFactor"].round(2)
     end
-    
+
     # deDuplicationFactor metric, calculated based on document instructions.
     # if condition to avoid divide by 0.
     if answer["uniqueBlocks"] == 0
@@ -85,7 +97,7 @@ module Cluster
       answer["deDuplicationFactor"] = answer["nonZeroBlocks"] / answer["uniqueBlocks"].to_f
       answer["deDuplicationFactor"] = answer["deDuplicationFactor"].round(2)
     end
-    
+
     # compressionFactor metric, calculated based on document instructions.
     # if condition to avoid divide by 0.
     if answer["uniqueBlocksUsedSpace"] == 0
@@ -94,23 +106,23 @@ module Cluster
       answer["compressionFactor"] = (answer["uniqueBlocks"] * 4096) / answer["uniqueBlocksUsedSpace"].to_f
       answer["compressionFactor"] = answer["compressionFactor"].round(2)
     end
-    
+
     # efficiencyFactor metric, calculated based on document instructions.
     # efficiencyFactor = thinProvisioningFactor * deDuplicationFactor * compressionFactor
     answer["efficiencyFactor"] = answer["thinProvisioningFactor"] * answer["deDuplicationFactor"] * answer["compressionFactor"]
     answer["efficiencyFactor"] = answer["efficiencyFactor"].round(2)
-    
-    return answer
-  end 
-  
 
-  
+    return answer
+  end
+
+
+
   ##
   # List all account, return Array of Hash
   #
   # Arguments:
   #   limit: (integer, default=1000)
-  #  
+  #
   def accounts_list(limit = 1000)
     api_call = {
       :method => "ListAccounts",
@@ -125,7 +137,7 @@ module Cluster
 
   ##
   # List Cluster Faults
-  # 
+  #
   # Arguments:
   #  fault_type: (node,drive,cluster,service, default=all)
   #       node: Fault affecting an entire node
@@ -145,7 +157,7 @@ module Cluster
 
   ##
   # Cluster List iSCSI sessions.
-  #  
+  #
   def iscsi_sessions_list()
     api_call = {
       :method => "ListISCSISessions",
@@ -157,4 +169,3 @@ module Cluster
 
 
 end
-

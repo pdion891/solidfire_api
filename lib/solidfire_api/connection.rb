@@ -5,9 +5,9 @@ require 'solidfire_api/cluster'
 require 'solidfire_api/volume_access_group'
 
 module SolidfireApi
-  
+
   ##
-  # Object connection 
+  # Object connection
   #
   # Call using:  SolidfireApi::Connection.new({...})
   #
@@ -15,13 +15,13 @@ module SolidfireApi
   #   mvip: (String)
   #   username: (String)
   #   password: (String)
-  # 
-  class Connection    
+  #
+  class Connection
     include Cluster
     include Volume
     include Node
     include VolumeAccessGroup
-    
+
     def self.data
       @data ||= Hash.new do |hash, key|
         hash[key] = {}
@@ -31,9 +31,9 @@ module SolidfireApi
     def self.reset
       @data = nil
     end
-    
+
     ##
-    # 
+    #
     # Used by all other methods to connect at the SolidFire API
     # require RestClient gem to handle Rest API calls.
     # the input is the complete API query as Hash, the method will
@@ -47,17 +47,19 @@ module SolidfireApi
     #   >> }
     #   >> query_sf(api_call)
     #
-    # 
+    #
     # Arguments:
     #   query: (Hash)
     #      must include the complete Solidfire API query string.
     def query_sf(query)
       # query is a hash that is post in json format to SolidFire API.
-      solidfire_rest_url = "https://#{@username}:#{@password}@#{@mvip}/json-rpc/8.0"
+      solidfire_rest_url = "https://#{@mvip}/json-rpc/8.0"
 
       conn = RestClient::Resource.new(
         solidfire_rest_url,
-        :verify_ssl => @verify_ssl
+        :verify_ssl => @verify_ssl,
+        :user => @username,
+        :password => @password
       )
       result = JSON.parse(conn.post query.to_json)
 
@@ -67,10 +69,10 @@ module SolidfireApi
         else
           return result["error"]
         end
-      else 
+      else
         return result["result"]
       end
-    end 
+    end
 
     def initialize(options={})
       @mvip = options[:mvip]
@@ -96,14 +98,14 @@ module SolidfireApi
     def name
       @name
     end
-    
+
     def mvip
       @mvip
     end
-    
+
     def svip
       @svip
     end
-    
-  end    
+
+  end
 end
