@@ -2,7 +2,7 @@
 # Volume Access Group api calls
 #
 module VolumeAccessGroup
-  
+
 
   ##
   # list VolumeAccessGroups
@@ -40,27 +40,50 @@ module VolumeAccessGroup
     answer = query_sf(api_call)
     return answer["volumeAccessGroupID"]
   end
-  
+
   ##
-  # Add iSCSI initiator to VolumeAccessGroup
+  # Add iSCSI initiator(s) to VolumeAccessGroup
   #
   # Arguments: 
-  #   initiator: (String)
+  #   initiator: (String or Array)
   #   group_id: (Integer)
   #
   # Require Admin credential
   #
   def vag_add_initiator(initiator, group_id)
+    initiator = [ initiator ] if initiator.class == String
     api_call = {
       :method => "AddInitiatorsToVolumeAccessGroup",
       :params => {
         :volumeAccessGroupID => group_id,
-        :initiators => [ initiator ]
+        :initiators => initiator
       }
     }
     answer = query_sf(api_call)
     return answer
-  end    
+  end
+
+  ##
+  # Remove iSCSI initiator(s) from VolumeAccessGroup
+  #
+  # Arguments: 
+  #   initiator: (String or Array)
+  #   group_id: (Integer)
+  #
+  # Require Admin credential
+  #
+  def vag_remove_initiator(initiator, group_id)
+    initiator = [ initiator ] if initiator.class == String
+    api_call = {
+      :method => "RemoveInitiatorsFromVolumeAccessGroup",
+      :params => {
+        :volumeAccessGroupID => group_id,
+        :initiators => initiator
+      }
+    }
+    answer = query_sf(api_call)
+    return answer
+  end
 
   ##
   # Add Volume to VolumeAccessGroup
@@ -72,25 +95,26 @@ module VolumeAccessGroup
   # Require Admin credential
   #
   def vag_add_volume_id(volume_id, group_id)
+    volume_id = [ volume_id ] if volume_id.class == String
     api_call = {
       :method => "AddVolumesToVolumeAccessGroup",
       :params => {
         :volumeAccessGroupID => group_id,
-        :volumes => [ volume_id ]
+        :volumes => volume_id
       }
     }
     answer = query_sf(api_call)
     return answer
-  end   
-  
+  end
+
   ##
   # Add Volume to VolumeAccessGroup using names
   #
   #
   def vag_add_volume(volume_name, vag_name)
-    volume_id = volumes_list().select {|s| s["name"] == volume_name }.first["volumeID"]
+    volume_id = volumes_list(name: volume_name).first["volumeID"]
     vag_id = vag_list().select {|s| s["name"] == vag_name }.first["volumeAccessGroupID"]
     vag_add_volume_id(volume_id, vag_id)
   end
-  
+
 end
