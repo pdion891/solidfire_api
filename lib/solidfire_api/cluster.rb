@@ -144,11 +144,12 @@ module Cluster
   #       drive: Fault affecting an individual drive
   #       cluster: Fault affecting the entire cluster
   #       service: Fault affecting a service on the cluster
-  def faults_list(fault_type = "all")
+  def faults_list(fault_type = "current", best_practices = 'true')
     api_call = {
       :method => "ListClusterFaults",
       :params => {
-        :faultTypes => fault_type
+        :faultTypes => fault_type,
+        :bestPractices => best_practices
       }
     }
     answer = query_sf(api_call)
